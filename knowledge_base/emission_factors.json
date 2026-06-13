@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "version": "2026.06",
+    "sources": [
+      "EPA GHG Emission Factors Hub",
+      "DEFRA 2024",
+      "IPCC AR6 GWP100"
+    ]
+  },
+  "factors": [
+    {
+      "id": "EPA-NATGAS-STATIONARY",
+      "source": "EPA",
+      "activity": "natural_gas_combustion_stationary",
+      "unit": "kg CO2e / MMBtu",
+      "factor": 53.06,
+      "scope": "scope_1"
+    },
+    {
+      "id": "DEFRA-ELEC-UK-2024",
+      "source": "DEFRA",
+      "activity": "grid_electricity_uk",
+      "unit": "kg CO2e / kWh",
+      "factor": 0.177,
+      "scope": "scope_2_location"
+    },
+    {
+      "id": "DEFRA-BUSINESS-TRAVEL-AIR-DOMESTIC",
+      "source": "DEFRA",
+      "activity": "business_travel_air_domestic",
+      "unit": "kg CO2e / passenger-km",
+      "factor": 0.255,
+      "scope": "scope_3_cat6"
+    },
+    {
+      "id": "EPA-DIESEL-MOBILE",
+      "source": "EPA",
+      "activity": "diesel_combustion_mobile",
+      "unit": "kg CO2e / gallon",
+      "factor": 10.21,
+      "scope": "scope_1"
+    }
+  ],
+  "gwp": {
+    "standard": "IPCC AR6 GWP100",
+    "values": {
+      "CO2": 1.0,
+      "CH4": 27.9,
+      "N2O": 273.0,
+      "HFC-134a": 1526.0,
+      "SF6": 25200.0
+    }
+  },
+  "grid_factors_by_country": {
+    "DE": {
+      "unit": "kg CO2e/kWh",
+      "factor": 0.366,
+      "year": 2024
+    },
+    "US": {
+      "unit": "kg CO2e/kWh",
+      "factor": 0.386,
+      "year": 2024
+    },
+    "IN": {
+      "unit": "kg CO2e/kWh",
+      "factor": 0.708,
+      "year": 2024
+    },
+    "SG": {
+      "unit": "kg CO2e/kWh",
+      "factor": 0.412,
+      "year": 2024
+    }
+  }
+}

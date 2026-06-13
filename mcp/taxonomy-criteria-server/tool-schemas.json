@@ -1,0 +1,19 @@
+{
+  "tools": [
+    {
+      "name": "get_tsc_for_activity"
+    },
+    {
+      "name": "get_dnsh_criteria"
+    },
+    {
+      "name": "check_nace_eligibility"
+    },
+    {
+      "name": "get_minimum_safeguards"
+    },
+    {
+      "name": "get_objective_thresholds"
+    }
+  ]
+}

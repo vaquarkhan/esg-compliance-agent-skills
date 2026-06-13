@@ -1,0 +1,19 @@
+{
+  "tools": [
+    {
+      "name": "screen_entity"
+    },
+    {
+      "name": "check_pep_status"
+    },
+    {
+      "name": "get_sanctions_lists"
+    },
+    {
+      "name": "monitor_entity_changes"
+    },
+    {
+      "name": "generate_screening_report"
+    }
+  ]
+}

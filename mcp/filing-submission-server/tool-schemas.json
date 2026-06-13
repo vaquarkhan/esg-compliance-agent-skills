@@ -1,0 +1,19 @@
+{
+  "tools": [
+    {
+      "name": "submit_csrd_filing"
+    },
+    {
+      "name": "submit_sec_filing"
+    },
+    {
+      "name": "validate_xbrl_tagging"
+    },
+    {
+      "name": "get_filing_status"
+    },
+    {
+      "name": "generate_esef_package"
+    }
+  ]
+}

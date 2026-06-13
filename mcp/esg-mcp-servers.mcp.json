@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "esg-regulatory-db": {
+      "url": "http://127.0.0.1:8001/sse"
+    },
+    "esg-emissions-factor": {
+      "url": "http://127.0.0.1:8002/sse"
+    },
+    "esg-taxonomy-criteria": {
+      "url": "http://127.0.0.1:8003/sse"
+    },
+    "esg-filing-submission": {
+      "url": "http://127.0.0.1:8004/sse"
+    },
+    "esg-sanctions-screening": {
+      "url": "http://127.0.0.1:8005/sse"
+    }
+  }
+}

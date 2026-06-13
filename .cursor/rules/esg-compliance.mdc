@@ -1,0 +1,13 @@
+---
+description: ESG compliance agent routing, lifecycle commands, and human-in-the-loop gates
+globs:
+alwaysApply: true
+---
+
+# ESG Compliance Agent Rules
+
+- Read AGENTS.md before loading skills
+- Use lifecycle commands: /spec, /plan, /build, /validate, /review, /backfill, /ship
+- Never submit filings without human approval
+- Never guess emission factors or legal conclusions
+- Route cross-border data through cross-border-data-transfer skill

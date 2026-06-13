@@ -1,0 +1,40 @@
+{
+  "tools": [
+    {
+      "name": "get_framework_requirements",
+      "parameters": {
+        "framework": "string",
+        "version": "string"
+      }
+    },
+    {
+      "name": "get_data_point_definitions",
+      "parameters": {
+        "standard": "string",
+        "topic": "string"
+      }
+    },
+    {
+      "name": "get_deadlines",
+      "parameters": {
+        "jurisdiction": "string",
+        "framework": "string",
+        "fiscal_year": "integer"
+      }
+    },
+    {
+      "name": "get_jurisdiction_rules",
+      "parameters": {
+        "jurisdiction": "string"
+      }
+    },
+    {
+      "name": "search_regulatory_text",
+      "parameters": {
+        "query": "string",
+        "framework": "string",
+        "limit": "integer"
+      }
+    }
+  ]
+}

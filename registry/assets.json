@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "skills": [
+    "skills/data-ingestion-validation",
+    "skills/ghg-emissions-calculation",
+    "skills/eu-taxonomy-alignment",
+    "skills/double-materiality-assessment",
+    "skills/sfdr-pai-computation",
+    "skills/audit-trail-reporting",
+    "skills/regulatory-change-monitor",
+    "skills/supply-chain-due-diligence",
+    "skills/biodiversity-tnfd-analytics",
+    "skills/cross-border-data-transfer"
+  ],
+  "mcp_servers": [
+    "mcp/regulatory-db-server",
+    "mcp/emissions-factor-server",
+    "mcp/taxonomy-criteria-server",
+    "mcp/filing-submission-server",
+    "mcp/sanctions-screening-server"
+  ],
+  "knowledge_base": [
+    "knowledge_base/emission_factors.json",
+    "knowledge_base/taxonomy_criteria.json"
+  ],
+  "infrastructure": "infrastructure/esg_compliance_stack.py"
+}

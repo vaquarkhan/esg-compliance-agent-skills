@@ -1,0 +1,4 @@
+# See https://help.github.com/articles/dealing-with-line-endings/
+* text=auto eol=lf
+*.py text eol=lf
+*.sh text eol=lf

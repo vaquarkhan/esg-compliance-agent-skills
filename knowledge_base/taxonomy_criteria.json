@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "version": "2026.06",
+    "framework": "EU Taxonomy Delegated Regulation"
+  },
+  "activities": [
+    {
+      "nace": "D35.11",
+      "name": "Production of electricity from solar PV",
+      "environmental_objective": "climate_mitigation",
+      "tsc": {
+        "threshold": "lifecycle_ghg_savings_pct >= 73",
+        "reference": "Annex I Section 4.1"
+      },
+      "dnsh": [
+        "climate_adaptation",
+        "water",
+        "pollution",
+        "biodiversity",
+        "circular_economy"
+      ]
+    },
+    {
+      "nace": "C29.10",
+      "name": "Manufacture of motor vehicles",
+      "environmental_objective": "climate_mitigation",
+      "tsc": {
+        "threshold": "tailpipe_co2_g_km <= 50",
+        "reference": "Annex I Section 3.3"
+      },
+      "dnsh": [
+        "climate_adaptation",
+        "water",
+        "pollution"
+      ]
+    }
+  ],
+  "minimum_safeguards": [
+    "OECD Guidelines for Multinational Enterprises",
+    "UN Guiding Principles on Business and Human Rights",
+    "ILO Core Conventions"
+  ],
+  "objective_thresholds": {
+    "climate_mitigation": {
+      "default": "substantial_contribution_per_annex"
+    },
+    "climate_adaptation": {
+      "default": "material_physical_risk_reduction"
+    }
+  }
+}

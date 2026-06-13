@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.whl
+
+# CDK / AWS
+infrastructure/cdk.out/
+cdk.context.json
+*.swp
+
+# IDE / editor
+.idea/
+.vscode/
+*.vsix
+*.iml
+.cursor/projects/
+
+# Test / coverage / lint
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.hypothesis/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets / keys
+*.pem
+*.key
+*.p12
+.secrets.baseline.local
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+
+# Node (future IDE plugins)
+node_modules/
+npm-debug.log*
+
+# Generated / local
+scripts/generate_repo.py.bak

@@ -1,0 +1,19 @@
+{
+  "tools": [
+    {
+      "name": "get_emission_factor"
+    },
+    {
+      "name": "list_factor_sources"
+    },
+    {
+      "name": "get_gwp_values"
+    },
+    {
+      "name": "convert_units"
+    },
+    {
+      "name": "get_grid_factors_by_country"
+    }
+  ]
+}

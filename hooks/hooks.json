@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "python scripts/validate-skills.py"
+      }
+    ]
+  }
+}
