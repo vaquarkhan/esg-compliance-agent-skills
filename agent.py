@@ -18,6 +18,7 @@ from typing import cast
 
 from pydantic_ai import Agent, RunContext
 
+from orchestration.attestation import attach_attestation
 from redaction import ESGPIIRedactor, RedactionResult
 
 SKILLS_DIR = Path(__file__).resolve().parent / "skills"
@@ -108,7 +109,8 @@ async def run_esg_agent(
     *,
     deps: ESGDeps | None = None,
     deanonymize_output: bool | None = None,
-) -> str:
+    structured: bool = False,
+) -> str | dict[str, object]:
     run_deps = deps or ESGDeps()
     if deanonymize_output is None:
         deanonymize_output = _env_deanonymize_enabled()
@@ -121,7 +123,17 @@ async def run_esg_agent(
     result = await esg_agent.run(redaction.redacted_text, deps=run_deps)
     output = cast(str, result.output)
     if deanonymize_output:
-        return run_deps.redactor.deanonymize(output)
+        output = run_deps.redactor.deanonymize(output)
+
+    if structured:
+        return attach_attestation(
+            {
+                "orchestration_mode": "full_agent",
+                "response": output,
+                "pii_entities_redacted": redaction.entity_count,
+            },
+            artifact_type="agent_response",
+        )
     return output
 
 
@@ -130,9 +142,15 @@ def run_esg_agent_sync(
     *,
     deps: ESGDeps | None = None,
     deanonymize_output: bool | None = None,
-) -> str:
+    structured: bool = False,
+) -> str | dict[str, object]:
     return asyncio.run(
-        run_esg_agent(user_prompt, deps=deps, deanonymize_output=deanonymize_output)
+        run_esg_agent(
+            user_prompt,
+            deps=deps,
+            deanonymize_output=deanonymize_output,
+            structured=structured,
+        )
     )
 
 

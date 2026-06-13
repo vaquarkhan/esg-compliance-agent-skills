@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ESG domain attestation envelope",
+  "description": "Required on filing-bound artifacts. Sustainability assuror sign-off is never auto-granted.",
+  "type": "object",
+  "required": ["assurance_status", "human_review_required"],
+  "properties": {
+    "assurance_status": {
+      "type": "string",
+      "enum": [
+        "pending_sustainability_assurance_sign_off",
+        "sustainability_assurance_signed_off"
+      ],
+      "default": "pending_sustainability_assurance_sign_off"
+    },
+    "sustainability_assuror_sign_off": {
+      "type": ["string", "null"],
+      "description": "Name/credential of ISAE 3000 / AA1000 assuror when signed"
+    },
+    "signed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "artifact_type": {
+      "type": "string",
+      "examples": ["ghg_inventory", "materiality_matrix", "planner_orchestration_result"]
+    },
+    "human_review_required": {
+      "type": "boolean",
+      "const": true,
+      "description": "Must remain true until assurance_status is sustainability_assurance_signed_off"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}

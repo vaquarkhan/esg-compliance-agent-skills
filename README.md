@@ -7,7 +7,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](requirements-lock.txt)
 [![Skills](https://img.shields.io/badge/skills-10-orange.svg)](skills-index.md)
 
-**Reference architecture for ESG compliance agents** — progressive-disclosure skills, PII redaction, five SSE MCP servers, deterministic routing layer, AWS CDK scaffold, and IDE plugin templates for CSRD/ESRS, EU Taxonomy, SFDR, SEC climate, TNFD, CSDDD, and cross-border localization (APAC, LATAM, MENA).
+**Reference architecture for ESG compliance agents** — progressive-disclosure skills, PII redaction, five SSE MCP servers, **three-tier orchestration** (deterministic routing, LLM planner, full agent), AWS CDK scaffold, and IDE plugin templates for CSRD/ESRS, EU Taxonomy, SFDR, SEC climate, TNFD, CSDDD, and cross-border localization (APAC, LATAM, MENA).
 
 > **Disclaimer:** Operational ESG reporting patterns only. **Not legal advice** and does not replace sustainability assurance, statutory audit, or legal counsel.
 
@@ -71,6 +71,16 @@ python agent.py "Scope CSRD ESRS E1 data points for FY2025"
 
 Without API keys, the agent uses Pydantic AI `TestModel`.
 
+### Orchestration modes
+
+| Mode | Command | What it does |
+| --- | --- | --- |
+| **Deterministic** (default) | `python -m orchestration.supervisor_agent "Map CSRD ESRS E1"` | Regex → one worker → fixed MCP call. **Not agentic.** |
+| **LLM planner** | `ESG_ORCHESTRATION_MODE=planner python -m orchestration.supervisor_agent "..."` | Task decomposition + dynamic MCP tool selection |
+| **Full agent** | `python agent.py "..."` | Pydantic AI + progressive skill loading + PII redaction |
+
+See [docs/architecture.md](docs/architecture.md) for honest framing of each tier.
+
 ```bash
 python scripts/demo_agent.py
 # or: make demo
@@ -80,9 +90,18 @@ python scripts/demo_agent.py
 
 ```bash
 make validate
-make test
+make test-all
+make e2e
 make lint
 make security
+```
+
+### End-to-end lifecycle
+
+```bash
+make e2e
+# /spec → /plan → /build → /validate → /review → /ship
+# Artifacts in artifacts/ with pending sustainability assurance on every JSON output
 ```
 
 **Engineering:** CI enforces Ruff, mypy, pip-audit, Bandit, detect-secrets, CodeQL, and ≥80% coverage on `agent.py` + `redaction.py`. See [docs/architecture.md](docs/architecture.md), [docs/sme-review.md](docs/sme-review.md), [docs/redaction-limitations.md](docs/redaction-limitations.md).
@@ -157,7 +176,7 @@ esg-compliance-agent-skills/
 ├── redaction.py             # PII redaction gate
 ├── skills/                  # 10 Agent Skills
 ├── mcp/                     # 5 SSE MCP servers
-├── orchestration/           # Supervisor + worker agents
+├── orchestration/           # Deterministic router + LLM planner + attestation
 ├── infrastructure/          # AWS CDK stack
 ├── knowledge_base/          # JSON stubs pre-OpenSearch
 ├── presets/                 # CSRD, SFDR presets

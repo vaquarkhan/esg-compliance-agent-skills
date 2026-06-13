@@ -20,3 +20,4 @@
 | **Last reviewed** | 2026-06-13 |
 | **Reviewer** | Repository maintainer |
 | **Next review due** | 2026-09-13 |
+| **Assurance status** | `pending_sustainability_assurance_sign_off` — KPI draft only |

@@ -12,6 +12,8 @@ TARGETS = [
     ROOT / "agent.py",
     ROOT / "redaction.py",
     ROOT / "orchestration",
+    ROOT / "mcp",
+    ROOT / "examples",
     ROOT / "scripts",
     ROOT / "compliance_tests",
 ]

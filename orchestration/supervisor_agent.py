@@ -1,12 +1,17 @@
-"""Supervisor agent — deterministic routing layer for ESG tasks.
+"""Deterministic routing layer + optional LLM planner for ESG tasks.
 
-Routes by regex to worker agents that call MCP tools. For LLM-driven
-decomposition and skill loading, use agent.py (Pydantic AI + SkillsCapability).
+Two orchestration modes (see docs/architecture.md):
+
+- **deterministic** (default): regex keyword → worker → largely fixed MCP call.
+- **planner**: LLM task decomposition + dynamic MCP tool selection via ``PlannerAgent``.
+
+For full agentic skill loading (progressive disclosure), use ``agent.py``.
 """
 
 from __future__ import annotations
 
 import asyncio
+import os
 import re
 import sys
 from typing import Any
@@ -31,8 +36,12 @@ WORKERS = {
 }
 
 
+def orchestration_mode() -> str:
+    return os.getenv("ESG_ORCHESTRATION_MODE", "deterministic").strip().lower()
+
+
 class SupervisorAgent:
-    """Decompose tasks and delegate to worker agents."""
+    """Regex-based router — deterministic, not agentic. See ``PlannerAgent`` for LLM planning."""
 
     def route(self, task: str) -> str:
         for pattern, worker in ROUTING_RULES:
@@ -40,11 +49,31 @@ class SupervisorAgent:
                 return worker
         return "compliance"
 
-    async def handle(self, task: str) -> dict[str, Any]:
+    async def handle_deterministic(self, task: str) -> dict[str, Any]:
         worker_key = self.route(task)
         worker = WORKERS[worker_key]
         result = await worker.run(task)
-        return {"supervisor": "esg-compliance", "routed_to": worker_key, "result": result}
+        return {
+            "supervisor": "esg-compliance-deterministic",
+            "orchestration_mode": "deterministic",
+            "routing_method": "regex_keyword_table",
+            "routed_to": worker_key,
+            "result": result,
+            "human_review_required": True,
+            "assurance_status": result.get("assurance_status"),
+            "attestation": result.get("attestation"),
+            "note": (
+                "Deterministic routing only — one worker, largely fixed MCP call. "
+                "Use ESG_ORCHESTRATION_MODE=planner or agent.py for agentic orchestration."
+            ),
+        }
+
+    async def handle(self, task: str) -> dict[str, Any]:
+        if orchestration_mode() == "planner":
+            from orchestration.planner_agent import PlannerAgent
+
+            return await PlannerAgent().handle(task)
+        return await self.handle_deterministic(task)
 
 
 async def main() -> None:

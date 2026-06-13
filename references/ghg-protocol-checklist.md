@@ -26,5 +26,6 @@
 | **Last reviewed** | 2026-06-13 |
 | **Reviewer** | Repository maintainer |
 | **Next review due** | 2026-09-13 |
+| **Assurance status** | `pending_sustainability_assurance_sign_off` — inventory draft only |
 | **Notes** | Demo checklist — not assurance opinion |
 | **Review record** | reviews/2026-Q2/ghg-protocol.md |

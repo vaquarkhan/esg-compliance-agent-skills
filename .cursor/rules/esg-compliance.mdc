@@ -8,6 +8,9 @@ alwaysApply: true
 
 - Read AGENTS.md before loading skills
 - Use lifecycle commands: /spec, /plan, /build, /validate, /review, /backfill, /ship
-- Never submit filings without human approval
+- Run full E2E: `make e2e` or `python scripts/e2e_pipeline.py`
+- Orchestration tiers: deterministic router (default), LLM planner (`ESG_ORCHESTRATION_MODE=planner`), full agent (`agent.py`)
+- All filing-bound artifacts: `assurance_status: pending_sustainability_assurance_sign_off` until sustainability assuror sign-off
+- Never submit filings without human approval token
 - Never guess emission factors or legal conclusions
 - Route cross-border data through cross-border-data-transfer skill

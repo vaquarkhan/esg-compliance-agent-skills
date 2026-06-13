@@ -33,7 +33,17 @@
     }
   ],
   "mappings": [],
-  "human_review_required": true,
   "note": "Populate mappings from source systems \u2014 stub output",
-  "source": "ESRS E1 sample subset \u2014 verify against official ESRS Set 1 text before filing"
+  "source": "ESRS E1 sample subset \u2014 verify against official ESRS Set 1 text before filing",
+  "human_review_required": true,
+  "attestation": {
+    "assurance_status": "pending_sustainability_assurance_sign_off",
+    "sustainability_assuror_sign_off": null,
+    "signed_at": null,
+    "artifact_type": "csrd_e1_mapping_matrix",
+    "human_review_required": true,
+    "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
+    "recorded_at": "2026-06-13T21:08:57.884712+00:00"
+  },
+  "assurance_status": "pending_sustainability_assurance_sign_off"
 }

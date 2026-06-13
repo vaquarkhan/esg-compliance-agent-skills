@@ -1,30 +1,26 @@
 #!/usr/bin/env python3
-"""Build GHG inventory from activity CSV using MCP emission factor server logic."""
+"""Build GHG inventory from activity CSV using knowledge base emission factors."""
 
 from __future__ import annotations
 
 import csv
 import hashlib
-import importlib.util
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "mcp" / "common"))
+
+from emissions_logic import get_emission_factor, get_grid_factors_by_country  # noqa: E402
+from orchestration.attestation import attach_attestation  # noqa: E402
+
 ACTIVITY_CSV = Path(__file__).resolve().parent / "activity_data.csv"
 OUTPUT = Path(__file__).resolve().parent / "ghg_inventory.json"
 PROVENANCE = Path(__file__).resolve().parent / "factor_provenance.json"
-
-
-def _load_server():
-    sys.path.insert(0, str(ROOT / "mcp"))
-    sys.path.insert(0, str(ROOT / "mcp" / "common"))
-    path = ROOT / "mcp" / "emissions-factor-server" / "server.py"
-    spec = importlib.util.spec_from_file_location("emissions_server", path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
+KB = ROOT / "knowledge_base" / "emission_factors.json"
 
 
 def sha256_file(path: Path) -> str:
@@ -32,7 +28,6 @@ def sha256_file(path: Path) -> str:
 
 
 def main() -> int:
-    server = _load_server()
     scope_1 = 0.0
     scope_2 = 0.0
     scope_3 = 0.0
@@ -47,25 +42,14 @@ def main() -> int:
             country = row.get("country_code", "")
 
             if scope == "scope_2_location" and country:
-                result = server.get_grid_factors_by_country(country)
+                result = get_grid_factors_by_country(country)
                 factor = result["grid_factor"]["factor"]
-                unit = result["grid_factor"]["unit"]
                 emissions_kg = activity * factor
                 record = {"type": "grid", "country": country, "result": result}
             else:
-                result = server.get_emission_factor(source, factor_key)
+                result = get_emission_factor(source, factor_key)
                 factor = result["factor"]["factor"]
-                unit = result["factor"]["unit"]
-                if "kWh" in unit and "MMBtu" not in unit:
-                    emissions_kg = activity * factor
-                elif "MMBtu" in unit:
-                    emissions_kg = activity * factor
-                elif "gallon" in unit:
-                    emissions_kg = activity * factor
-                elif "passenger-km" in unit:
-                    emissions_kg = activity * factor
-                else:
-                    emissions_kg = activity * factor
+                emissions_kg = activity * factor
                 record = {"type": "activity", "result": result}
 
             tco2e = emissions_kg / 1000.0
@@ -77,31 +61,42 @@ def main() -> int:
                 scope_3 += tco2e
 
             provenance.append(
-                {
-                    "line": row,
-                    "emissions_tCO2e": round(tco2e, 4),
-                    "factor_record": record,
-                    "computed_at": datetime.now(timezone.utc).isoformat(),
-                }
+                attach_attestation(
+                    {
+                        "line": row,
+                        "emissions_tCO2e": round(tco2e, 4),
+                        "factor_record": record,
+                        "computed_at": datetime.now(timezone.utc).isoformat(),
+                    },
+                    artifact_type="factor_provenance_line",
+                )
             )
 
-    inventory = {
-        "reporting_period": "FY2025",
-        "boundary": "operational_control",
-        "scopes": {
-            "scope_1_tCO2e": round(scope_1, 4),
-            "scope_2_location_tCO2e": round(scope_2, 4),
-            "scope_3_tCO2e": round(scope_3, 4),
-            "total_tCO2e": round(scope_1 + scope_2 + scope_3, 4),
+    kb_meta = json.loads(KB.read_text(encoding="utf-8"))["metadata"]
+    inventory = attach_attestation(
+        {
+            "reporting_period": "FY2025",
+            "boundary": "operational_control",
+            "scopes": {
+                "scope_1_tCO2e": round(scope_1, 4),
+                "scope_2_location_tCO2e": round(scope_2, 4),
+                "scope_3_tCO2e": round(scope_3, 4),
+                "total_tCO2e": round(scope_1 + scope_2 + scope_3, 4),
+            },
+            "gwp_standard": "IPCC AR6 GWP100",
+            "factor_source_metadata": kb_meta,
+            "activity_file_sha256": sha256_file(ACTIVITY_CSV),
         },
-        "gwp_standard": "IPCC AR6 GWP100",
-        "activity_file_sha256": sha256_file(ACTIVITY_CSV),
-        "human_review_required": True,
-        "assurance_status": "pending_sustainability_assurance_sign_off",
-    }
+        artifact_type="ghg_inventory",
+    )
+
+    provenance_envelope = attach_attestation(
+        {"lines": provenance, "line_count": len(provenance)},
+        artifact_type="factor_provenance",
+    )
 
     OUTPUT.write_text(json.dumps(inventory, indent=2) + "\n", encoding="utf-8")
-    PROVENANCE.write_text(json.dumps(provenance, indent=2) + "\n", encoding="utf-8")
+    PROVENANCE.write_text(json.dumps(provenance_envelope, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUTPUT} (total {inventory['scopes']['total_tCO2e']} tCO2e)")
     print(f"Wrote {PROVENANCE}")
     return 0

@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 REFS = ROOT / "references"
 REQUIRED = ("## Authoritative sources", "## Provenance")
+PENDING_ASSURANCE = "pending_sustainability_assurance_sign_off"
 
 
 def main() -> int:
@@ -24,6 +25,10 @@ def main() -> int:
                 errors.append(f"{path.name}: missing {section}")
         if not re.search(r"\*\*Last reviewed\*\*", text):
             errors.append(f"{path.name}: missing Last reviewed row")
+        if not re.search(r"\*\*Assurance status\*\*", text):
+            errors.append(f"{path.name}: missing Assurance status row (required pending assurance)")
+        elif PENDING_ASSURANCE not in text and "sustainability_assurance_signed_off" not in text:
+            errors.append(f"{path.name}: Assurance status must cite pending or signed-off value")
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1

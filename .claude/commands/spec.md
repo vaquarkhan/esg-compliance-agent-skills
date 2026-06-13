@@ -1,3 +1,5 @@
-Define ESG engagement scope: frameworks, entities, reporting period, jurisdictions, material topics, and exclusions.
+Generate `artifacts/scope.json` from `templates/csrd-scope.yaml`.
 
-Output: `scope.json` using `templates/csrd-scope.yaml` as scaffold.
+Run: `python -m scripts.lifecycle.spec --input templates/csrd-scope.yaml`
+
+Attach `assurance_status: pending_sustainability_assurance_sign_off` via `orchestration/attestation.py`.

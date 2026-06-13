@@ -57,3 +57,5 @@ npm-debug.log*
 
 # Generated / local
 scripts/generate_repo.py.bak
+artifacts/*
+!artifacts/README.md

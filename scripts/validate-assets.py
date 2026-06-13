@@ -23,7 +23,15 @@ def collect_paths(data: dict) -> list[tuple[str, str]]:
         paths.append(("mcp_servers", item if isinstance(item, str) else item["path"]))
     for item in data.get("plugin_packages", []):
         paths.append(("plugin_packages", item["path"]))
-    for key in ("presets", "references", "agents", "skills", "knowledge_base"):
+    for key in (
+        "presets",
+        "references",
+        "agents",
+        "skills",
+        "knowledge_base",
+        "orchestration",
+        "lifecycle_scripts",
+    ):
         for p in data.get(key, []):
             rel = p if isinstance(p, str) else p.get("path", "")
             if rel:

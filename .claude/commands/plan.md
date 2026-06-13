@@ -1,3 +1,5 @@
-Produce work breakdown, MCP tool invocation plan, and evidence checklist from `scope.json`.
+Generate `artifacts/plan.md` and `artifacts/plan.json` from scope.
 
-Output: `plan.md` with assigned worker agents and skills.
+Run: `python -m scripts.lifecycle.plan`
+
+Requires `/spec` output. All plan artifacts carry pending sustainability assurance status.

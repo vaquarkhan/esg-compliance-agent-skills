@@ -1,95 +1,142 @@
-[
-  {
-    "line": {
-      "scope": "scope_1",
-      "factor_source": "EPA",
-      "factor_activity": "natural_gas_combustion_stationary",
-      "activity": "12500",
-      "unit": "MMBtu",
-      "country_code": "",
-      "notes": "HQ boiler"
-    },
-    "emissions_tCO2e": 663.25,
-    "factor_record": {
-      "type": "activity",
-      "result": {
-        "factor": {
-          "id": "EPA-NATGAS-STATIONARY",
-          "source": "EPA",
-          "activity": "natural_gas_combustion_stationary",
-          "unit": "kg CO2e / MMBtu",
-          "factor": 53.06,
-          "scope": "scope_1"
-        },
-        "metadata": {
-          "version": "2026.06",
-          "sources": [
-            "EPA GHG Emission Factors Hub",
-            "DEFRA 2024",
-            "IPCC AR6 GWP100"
-          ]
+{
+  "lines": [
+    {
+      "line": {
+        "scope": "scope_1",
+        "factor_source": "EPA",
+        "factor_activity": "natural_gas_combustion_stationary",
+        "activity": "12500",
+        "unit": "MMBtu",
+        "country_code": "",
+        "notes": "HQ boiler"
+      },
+      "emissions_tCO2e": 663.25,
+      "factor_record": {
+        "type": "activity",
+        "result": {
+          "factor": {
+            "id": "EPA-NATGAS-STATIONARY",
+            "source": "EPA",
+            "activity": "natural_gas_combustion_stationary",
+            "unit": "kg CO2e / MMBtu",
+            "factor": 53.06,
+            "scope": "scope_1"
+          },
+          "metadata": {
+            "version": "2026.06",
+            "sources": [
+              "EPA GHG Emission Factors Hub",
+              "DEFRA 2024",
+              "IPCC AR6 GWP100"
+            ]
+          }
         }
-      }
+      },
+      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "human_review_required": true,
+      "attestation": {
+        "assurance_status": "pending_sustainability_assurance_sign_off",
+        "sustainability_assuror_sign_off": null,
+        "signed_at": null,
+        "artifact_type": "factor_provenance_line",
+        "human_review_required": true,
+        "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
+        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+      },
+      "assurance_status": "pending_sustainability_assurance_sign_off"
     },
-    "computed_at": "2026-06-13T19:30:22.218414+00:00"
-  },
-  {
-    "line": {
-      "scope": "scope_2_location",
-      "factor_source": "DEFRA",
-      "factor_activity": "grid_electricity",
-      "activity": "4200000",
-      "unit": "kWh",
-      "country_code": "IN",
-      "notes": "India operations"
-    },
-    "emissions_tCO2e": 2973.6,
-    "factor_record": {
-      "type": "grid",
-      "country": "IN",
-      "result": {
+    {
+      "line": {
+        "scope": "scope_2_location",
+        "factor_source": "DEFRA",
+        "factor_activity": "grid_electricity",
+        "activity": "4200000",
+        "unit": "kWh",
         "country_code": "IN",
-        "grid_factor": {
-          "unit": "kg CO2e/kWh",
-          "factor": 0.708,
-          "year": 2024
+        "notes": "India operations"
+      },
+      "emissions_tCO2e": 2973.6,
+      "factor_record": {
+        "type": "grid",
+        "country": "IN",
+        "result": {
+          "country_code": "IN",
+          "grid_factor": {
+            "unit": "kg CO2e/kWh",
+            "factor": 0.708,
+            "year": 2024
+          }
         }
-      }
+      },
+      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "human_review_required": true,
+      "attestation": {
+        "assurance_status": "pending_sustainability_assurance_sign_off",
+        "sustainability_assuror_sign_off": null,
+        "signed_at": null,
+        "artifact_type": "factor_provenance_line",
+        "human_review_required": true,
+        "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
+        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+      },
+      "assurance_status": "pending_sustainability_assurance_sign_off"
     },
-    "computed_at": "2026-06-13T19:30:22.218414+00:00"
+    {
+      "line": {
+        "scope": "scope_3",
+        "factor_source": "DEFRA",
+        "factor_activity": "business_travel_air_domestic",
+        "activity": "85000",
+        "unit": "passenger-km",
+        "country_code": "",
+        "notes": "Domestic flights"
+      },
+      "emissions_tCO2e": 21.675,
+      "factor_record": {
+        "type": "activity",
+        "result": {
+          "factor": {
+            "id": "DEFRA-BUSINESS-TRAVEL-AIR-DOMESTIC",
+            "source": "DEFRA",
+            "activity": "business_travel_air_domestic",
+            "unit": "kg CO2e / passenger-km",
+            "factor": 0.255,
+            "scope": "scope_3_cat6"
+          },
+          "metadata": {
+            "version": "2026.06",
+            "sources": [
+              "EPA GHG Emission Factors Hub",
+              "DEFRA 2024",
+              "IPCC AR6 GWP100"
+            ]
+          }
+        }
+      },
+      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "human_review_required": true,
+      "attestation": {
+        "assurance_status": "pending_sustainability_assurance_sign_off",
+        "sustainability_assuror_sign_off": null,
+        "signed_at": null,
+        "artifact_type": "factor_provenance_line",
+        "human_review_required": true,
+        "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
+        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+      },
+      "assurance_status": "pending_sustainability_assurance_sign_off"
+    }
+  ],
+  "line_count": 3,
+  "human_review_required": true,
+  "attestation": {
+    "assurance_status": "pending_sustainability_assurance_sign_off",
+    "sustainability_assuror_sign_off": null,
+    "signed_at": null,
+    "artifact_type": "factor_provenance",
+    "human_review_required": true,
+    "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
+    "recorded_at": "2026-06-13T21:08:57.655536+00:00"
   },
-  {
-    "line": {
-      "scope": "scope_3",
-      "factor_source": "DEFRA",
-      "factor_activity": "business_travel_air_domestic",
-      "activity": "85000",
-      "unit": "passenger-km",
-      "country_code": "",
-      "notes": "Domestic flights"
-    },
-    "emissions_tCO2e": 21.675,
-    "factor_record": {
-      "type": "activity",
-      "result": {
-        "factor": {
-          "id": "DEFRA-BUSINESS-TRAVEL-AIR-DOMESTIC",
-          "source": "DEFRA",
-          "activity": "business_travel_air_domestic",
-          "unit": "kg CO2e / passenger-km",
-          "factor": 0.255,
-          "scope": "scope_3_cat6"
-        },
-        "metadata": {
-          "version": "2026.06",
-          "sources": [
-            "EPA GHG Emission Factors Hub",
-            "DEFRA 2024",
-            "IPCC AR6 GWP100"
-          ]
-        }
-      }
-    },
-    "computed_at": "2026-06-13T19:30:22.219421+00:00"
-  }
-]
+  "assurance_status": "pending_sustainability_assurance_sign_off"
+}

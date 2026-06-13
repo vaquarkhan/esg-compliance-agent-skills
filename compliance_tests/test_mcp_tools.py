@@ -34,3 +34,5 @@ def test_filing_requires_approval():
     mod = _load_server("filing-submission-server")
     result = mod.submit_csrd_filing("entity-1", "s3://pkg", "PENDING")
     assert result["status"] == "rejected"
+    assert result["assurance_status"] == "pending_sustainability_assurance_sign_off"
+    assert result["attestation"]["human_review_required"] is True

@@ -22,3 +22,4 @@
 | **Last reviewed** | 2026-06-13 |
 | **Reviewer** | Repository maintainer |
 | **Next review due** | 2026-06-27 |
+| **Assurance status** | `pending_sustainability_assurance_sign_off` — transfer assessment draft only |

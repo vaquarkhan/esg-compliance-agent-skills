@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from orchestration.attestation import attach_attestation
 from orchestration.mcp_client import call_mcp
 
 SKILLS = ["regulatory-change-monitor", "supply-chain-due-diligence", "cross-border-data-transfer"]
@@ -17,4 +18,7 @@ class MonitoringAgent:
             tool_result = await call_mcp("regulatory", "get_jurisdiction_rules", jurisdiction=jurisdiction)
         else:
             tool_result = await call_mcp("regulatory", "get_deadlines", jurisdiction="EU", framework="CSRD", fiscal_year=2025)
-        return {"agent": "monitoring_agent", "skills": SKILLS, "task": task, "tool_result": tool_result, "human_review_required": True}
+        return attach_attestation(
+            {"agent": "monitoring_agent", "skills": SKILLS, "task": task, "tool_result": tool_result, "human_review_required": True},
+            artifact_type="monitoring_agent_result",
+        )

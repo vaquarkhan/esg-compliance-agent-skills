@@ -25,5 +25,6 @@ Use for `/spec` and `/validate` — not a complete ESRS datapoint list.
 | **Last reviewed** | 2026-06-13 |
 | **Reviewer** | Repository maintainer |
 | **Next review due** | 2026-09-13 |
+| **Assurance status** | `pending_sustainability_assurance_sign_off` — checklist text only; not an assurance opinion |
 | **Notes** | Operational checklist only |
 | **Review record** | reviews/2026-Q2/csrd-esrs.md |

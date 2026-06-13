@@ -1,3 +1,7 @@
-Run schema, factor-source, XBRL, taxonomy, and cross-border validation checks.
+Validate build artifacts and attestation envelopes.
 
-Output: validation report with pass/fail per control.
+Run: `python -m scripts.lifecycle.validate`
+
+Writes `artifacts/validation_report.json`. Fails if any artifact missing `assurance_status: pending_sustainability_assurance_sign_off`.
+
+Schema: `knowledge_base/attestation_schema.json`

@@ -38,6 +38,20 @@ Execute **deterministic ESG compliance workflows** across CSRD/ESRS, EU Taxonomy
 
 Recommended flow: `/spec` → `/plan` → `/build` → `/validate` → `/review` → `/ship`
 
+Run end-to-end: `make e2e` or `python scripts/e2e_pipeline.py` (writes to `artifacts/`).
+
+All lifecycle JSON outputs default to `assurance_status: pending_sustainability_assurance_sign_off`. See [docs/sme-review.md](docs/sme-review.md).
+
+## Orchestration tiers
+
+| Tier | Entry | Agentic? |
+| --- | --- | --- |
+| Deterministic router | `python -m orchestration.supervisor_agent` | No — regex → one worker |
+| LLM planner | `ESG_ORCHESTRATION_MODE=planner python -m orchestration.supervisor_agent` | Partial — multi-step MCP plan |
+| Full agent | `python agent.py` or `run_esg_agent_sync(..., structured=True)` | Yes — progressive skills |
+
+See [docs/architecture.md](docs/architecture.md).
+
 ## Skill routing
 
 | Signal | Primary skill |
@@ -84,7 +98,11 @@ See [mcp/README.md](mcp/README.md).
 
 | File | Role |
 | --- | --- |
-| `orchestration/supervisor_agent.py` | Task routing + MCP client orchestration |
+| `orchestration/supervisor_agent.py` | Deterministic regex router (default) |
+| `orchestration/planner_agent.py` | LLM task decomposition + dynamic MCP calls |
+| `orchestration/attestation.py` | Pending sustainability assurance envelope |
+| `scripts/e2e_pipeline.py` | Full lifecycle E2E runner |
+| `agent.py` | Pydantic AI + SkillsCapability |
 | `knowledge_base/*.json` | Local regulatory stubs |
 | `infrastructure/esg_compliance_stack.py` | AWS CDK multi-region stack |
 | `skills-index.md` | Full skill catalog |
@@ -92,6 +110,7 @@ See [mcp/README.md](mcp/README.md).
 ## Validation
 
 ```bash
-python scripts/validate-skills.py
-pytest compliance_tests/ evals/ -v
+make validate    # skills, assets, SME provenance
+make test-all    # compliance_tests + evals
+make e2e         # /spec → /ship pipeline + attestation check
 ```

@@ -1,3 +1,5 @@
-Reconcile historical periods, restate prior disclosures, and update audit trail in DynamoDB/S3.
+Restate prior periods with audit trail.
 
-Output: `restatement_log.json` with before/after hashes.
+Emit `artifacts/restatement_log.json` using `attach_attestation(..., artifact_type="restatement_log")`.
+
+Default `assurance_status: pending_sustainability_assurance_sign_off` until assuror re-signs restated disclosures.

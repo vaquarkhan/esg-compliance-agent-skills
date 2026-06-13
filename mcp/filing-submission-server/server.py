@@ -12,9 +12,18 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "mcp"))
+sys.path.insert(0, str(ROOT / "mcp" / "common"))
+from common.filing_logic import submit_csrd_filing as submit_csrd_logic  # noqa: E402
 from sdk_loader import get_fastmcp  # noqa: E402
 
 KB = ROOT / "knowledge_base"
+
+
+def _with_attestation(payload: dict[str, Any], artifact_type: str) -> dict[str, Any]:
+    sys.path.insert(0, str(ROOT))
+    from orchestration.attestation import attach_attestation
+
+    return attach_attestation(payload, artifact_type=artifact_type)
 
 mcp = get_fastmcp(
     name="filing-submission-server",
@@ -26,31 +35,27 @@ mcp = get_fastmcp(
 @mcp.tool()
 def submit_csrd_filing(entity_id: str, package_uri: str, human_approval_token: str) -> dict[str, Any]:
     """Submit CSRD filing stub — requires human approval token."""
-    if not human_approval_token or human_approval_token == "PENDING":
-        return {"status": "rejected", "reason": "Human approval token required"}
-    filing_id = str(uuid.uuid4())
-    return {
-        "status": "accepted_stub",
-        "filing_id": filing_id,
-        "entity_id": entity_id,
-        "package_uri": package_uri,
-        "registry": "ESMA ESEF (mock)",
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
-    }
+    return submit_csrd_logic(entity_id, package_uri, human_approval_token)
 
 
 @mcp.tool()
 def submit_sec_filing(cik: str, form_type: str, package_uri: str, human_approval_token: str) -> dict[str, Any]:
     """Submit SEC filing stub — requires human approval token."""
     if not human_approval_token or human_approval_token == "PENDING":
-        return {"status": "rejected", "reason": "Human approval token required"}
-    return {
-        "status": "accepted_stub",
-        "accession_number": f"0000320193-{datetime.now(timezone.utc).strftime('%y%m%d')}-000001",
-        "cik": cik,
-        "form_type": form_type,
-        "package_uri": package_uri,
-    }
+        return _with_attestation(
+            {"status": "rejected", "reason": "Human approval token required"},
+            artifact_type="sec_filing_submission",
+        )
+    return _with_attestation(
+        {
+            "status": "accepted_stub",
+            "accession_number": f"0000320193-{datetime.now(timezone.utc).strftime('%y%m%d')}-000001",
+            "cik": cik,
+            "form_type": form_type,
+            "package_uri": package_uri,
+        },
+        artifact_type="sec_filing_submission",
+    )
 
 
 @mcp.tool()
@@ -59,32 +64,40 @@ def validate_xbrl_tagging(instance_path: str, taxonomy: str = "ESRS") -> dict[st
     errors = []
     if not instance_path.endswith((".xhtml", ".xml", ".zip")):
         errors.append("Invalid instance extension")
-    return {
-        "instance_path": instance_path,
-        "taxonomy": taxonomy,
-        "valid": len(errors) == 0,
-        "errors": errors,
-        "facts_checked": 42,
-    }
+    return _with_attestation(
+        {
+            "instance_path": instance_path,
+            "taxonomy": taxonomy,
+            "valid": len(errors) == 0,
+            "errors": errors,
+            "facts_checked": 42,
+        },
+        artifact_type="xbrl_validation",
+    )
 
 
 @mcp.tool()
 def get_filing_status(filing_id: str) -> dict[str, Any]:
     """Return mock filing status."""
-    return {"filing_id": filing_id, "status": "processing", "last_updated": datetime.now(timezone.utc).isoformat()}
+    return _with_attestation(
+        {"filing_id": filing_id, "status": "processing", "last_updated": datetime.now(timezone.utc).isoformat()},
+        artifact_type="filing_status",
+    )
 
 
 @mcp.tool()
 def generate_esef_package(report_html: str, taxonomy_version: str = "2024") -> dict[str, Any]:
     """Generate mock ESEF package descriptor."""
     package_id = str(uuid.uuid4())
-    return {
-        "package_id": package_id,
-        "taxonomy_version": taxonomy_version,
-        "artifacts": ["report.xhtml", "calculations.xml", "labels.json"],
-        "report_size_bytes": len(report_html.encode("utf-8")),
-        "human_review_required": True,
-    }
+    return _with_attestation(
+        {
+            "package_id": package_id,
+            "taxonomy_version": taxonomy_version,
+            "artifacts": ["report.xhtml", "calculations.xml", "labels.json"],
+            "report_size_bytes": len(report_html.encode("utf-8")),
+        },
+        artifact_type="esef_package",
+    )
 
 
 

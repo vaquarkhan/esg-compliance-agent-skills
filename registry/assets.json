@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "skills": [
     "skills/using-esg-agent-skills",
     "skills/data-ingestion-validation",
@@ -23,7 +23,25 @@
   "knowledge_base": [
     "knowledge_base/emission_factors.json",
     "knowledge_base/taxonomy_criteria.json",
-    "knowledge_base/jurisdiction_reporting.json"
+    "knowledge_base/jurisdiction_reporting.json",
+    "knowledge_base/esrs_data_points.json",
+    "knowledge_base/attestation_schema.json"
+  ],
+  "orchestration": [
+    "orchestration/supervisor_agent.py",
+    "orchestration/planner_agent.py",
+    "orchestration/attestation.py",
+    "orchestration/tool_catalog.py"
+  ],
+  "lifecycle_scripts": [
+    "scripts/lifecycle/spec.py",
+    "scripts/lifecycle/plan.py",
+    "scripts/lifecycle/build.py",
+    "scripts/lifecycle/validate.py",
+    "scripts/lifecycle/review.py",
+    "scripts/lifecycle/ship.py",
+    "scripts/e2e_pipeline.py",
+    "scripts/validate-attestation.py"
   ],
   "templates": [
     {"path": "templates/csrd-scope.yaml", "framework": "CSRD"}
@@ -41,7 +59,9 @@
   ],
   "references": [
     "references/csrd-esrs-checklist.md",
-    "references/ghg-protocol-checklist.md"
+    "references/ghg-protocol-checklist.md",
+    "references/eu-taxonomy-checklist.md",
+    "references/cross-border-checklist.md"
   ],
   "agents": [
     "agents/esg-architect.md",
@@ -55,7 +75,9 @@
     "agent.py",
     "redaction.py",
     "scripts/demo_agent.py",
-    "scripts/validate-skills.py"
+    "scripts/validate-skills.py",
+    "scripts/validate-sme-provenance.py",
+    "scripts/validate-attestation.py"
   ],
   "infrastructure": "infrastructure/esg_compliance_stack.py"
 }
