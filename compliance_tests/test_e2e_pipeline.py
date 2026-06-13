@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+pytest.importorskip("yaml")
+
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON = sys.executable
 PENDING = "pending_sustainability_assurance_sign_off"

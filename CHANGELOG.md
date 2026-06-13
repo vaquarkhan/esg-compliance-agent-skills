@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- `compliance_tests/test_agent.py` skips at module level when `pydantic_ai` is not installed (collection no longer hard-errors)
+- `.gitattributes` extended for markdown/JSON/YAML; line endings normalized to LF
+
 ### Added
 
 - **Full lifecycle E2E pipeline** — `scripts/e2e_pipeline.py` and `scripts/lifecycle/{spec,plan,build,validate,review,ship}.py`

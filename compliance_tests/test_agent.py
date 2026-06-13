@@ -1,5 +1,12 @@
 """Agent entry smoke tests (TestModel when no API key)."""
 
+import pytest
+
+from compliance_tests.support import pydantic_ai_available
+
+if not pydantic_ai_available():
+    pytest.skip("pydantic_ai not installed", allow_module_level=True)
+
 from unittest.mock import AsyncMock, patch
 
 import agent

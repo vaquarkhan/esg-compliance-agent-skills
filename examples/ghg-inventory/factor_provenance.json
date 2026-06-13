@@ -32,7 +32,7 @@
           }
         }
       },
-      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "computed_at": "2026-06-13T21:16:59.423341+00:00",
       "human_review_required": true,
       "attestation": {
         "assurance_status": "pending_sustainability_assurance_sign_off",
@@ -41,7 +41,7 @@
         "artifact_type": "factor_provenance_line",
         "human_review_required": true,
         "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
-        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+        "recorded_at": "2026-06-13T21:16:59.423341+00:00"
       },
       "assurance_status": "pending_sustainability_assurance_sign_off"
     },
@@ -68,7 +68,7 @@
           }
         }
       },
-      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "computed_at": "2026-06-13T21:16:59.423341+00:00",
       "human_review_required": true,
       "attestation": {
         "assurance_status": "pending_sustainability_assurance_sign_off",
@@ -77,7 +77,7 @@
         "artifact_type": "factor_provenance_line",
         "human_review_required": true,
         "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
-        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+        "recorded_at": "2026-06-13T21:16:59.423341+00:00"
       },
       "assurance_status": "pending_sustainability_assurance_sign_off"
     },
@@ -113,7 +113,7 @@
           }
         }
       },
-      "computed_at": "2026-06-13T21:08:57.654481+00:00",
+      "computed_at": "2026-06-13T21:16:59.423341+00:00",
       "human_review_required": true,
       "attestation": {
         "assurance_status": "pending_sustainability_assurance_sign_off",
@@ -122,7 +122,7 @@
         "artifact_type": "factor_provenance_line",
         "human_review_required": true,
         "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
-        "recorded_at": "2026-06-13T21:08:57.654481+00:00"
+        "recorded_at": "2026-06-13T21:16:59.423341+00:00"
       },
       "assurance_status": "pending_sustainability_assurance_sign_off"
     }
@@ -136,7 +136,7 @@
     "artifact_type": "factor_provenance",
     "human_review_required": true,
     "notes": "Operational draft only \u2014 requires sustainability assuror sign-off before external filing.",
-    "recorded_at": "2026-06-13T21:08:57.655536+00:00"
+    "recorded_at": "2026-06-13T21:16:59.424326+00:00"
   },
   "assurance_status": "pending_sustainability_assurance_sign_off"
 }
