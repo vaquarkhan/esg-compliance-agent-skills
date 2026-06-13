@@ -9,4 +9,7 @@ constructs>=10.4.0
 boto3>=1.35.0
 pytz>=2024.1
 pydantic>=2.9.0
+pydantic-ai>=1.74.0
+pydantic-ai-skills>=0.11.0
 python-dotenv>=1.0.0
+pyyaml>=6.0.0

@@ -1,39 +1,74 @@
 ---
 name: supply-chain-due-diligence
-description: Assesses CSDDD and UFLPA supply chain risk with entity screening. Use for due diligence or supplier onboarding.
+description: Assesses CSDDD and UFLPA supply chain risk with entity screening, PEP checks, and composite supplier risk registers. Use for supplier onboarding, due diligence, or sanctions-adjacent ESG screening.
 ---
 
 # Skill 08: Supply Chain Due Diligence
 
-## Scope
+## Overview
 
-Screen suppliers and assess CSDDD/UFLPA composite risk.
+Combines **CSDDD** human-rights/environmental due diligence workflow with **UFLPA** forced-labor risk screening via sanctions MCP tools.
+
+## When to Use
+
+- Supplier onboarding / annual refresh
+- CSDDD value chain assessment
+- UFLPA entity list cross-check (US supply chains)
 
 ## Mandatory constraints
 
-- **Human-in-the-loop:** All final filings, legal assessments, and assurance conclusions require explicit human reviewer sign-off.
-- **No guessing:** Do not invent emission factors, taxonomy percentages, materiality scores, or regulatory citations.
-- **Provenance:** Every numeric output must cite source (MCP tool response, knowledge base version, or primary document).
-- **PII:** Redact personal identifiers; enforce localization via `cross-border-data-transfer` when data leaves origin jurisdiction.
+- **Human-in-the-loop:** Screening hits require analyst review — never auto-clear suppliers.
+- **No guessing:** Risk scores are **indicative** from mock MCP; production uses live lists.
+- **PII:** Supplier contacts redacted in agent logs; localize per Skill 10.
 
-## Workflow
+## Core process
 
-1. Collect supplier master data
-2. Screen via `screen_entity` and `check_pep_status`
-3. Monitor changes via `monitor_entity_changes`
-4. Generate `generate_screening_report` for human review
+### Step 1 — Supplier master data
+
+Collect: legal name, country, NACE, tier, spend, products.
+
+### Step 2 — Entity screening
+
+`screen_entity(name, country, identifiers)` — escalate `risk_level: high`
+
+### Step 3 — PEP / governance
+
+`check_pep_status(name, role)` for senior supplier leadership where relevant.
+
+### Step 4 — Ongoing monitoring
+
+`monitor_entity_changes(entity_id, since)` on annual cycle.
+
+### Step 5 — Consolidated report
+
+`generate_screening_report(entity_ids)` → human-approved PDF.
+
+Emit `supplier_risk_register.json` with CSDDD action plans (prevent, mitigate, remedy).
 
 ## MCP tools
 
-`sanctions-screening-server`: all tools
+`sanctions-screening-server`: all five tools
 
-## Output artifacts
+## Common rationalizations
 
-- `supplier_risk_register.json`
-- `screening_report.pdf` (human approved)
+| Excuse | Rebuttal |
+| --- | --- |
+| "Low MCP risk clears supplier." | Mock screening ≠ cleared — **human analyst** required. |
+| "Tier 1 only is enough for CSDDD." | CSDDD expects **value chain** depth proportional to severity. |
 
-## Anti-patterns
+## Red flags
 
-- Submitting filings without `/review` approval
-- Using outdated emission factors without `list_factor_sources` verification
-- Declaring taxonomy alignment without DNSH assessment
+- Auto-approval on watchlist hit
+- Supplier PII in unencrypted cross-border storage
+
+## Verification checklist
+
+- [ ] All tier-1+ suppliers screened
+- [ ] Hits assigned analyst owner
+- [ ] CSDDD remediation plan for high-risk suppliers
+- [ ] `/review` before procurement policy change
+
+## SME provenance
+
+| **Last reviewed** | 2026-06-13 |
+| **Next review due** | 2026-09-13 |

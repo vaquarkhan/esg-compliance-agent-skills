@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "version": "2026.06",
+    "note": "Operational stubs — verify effective dates with legal/SME before filings"
+  },
+  "apac": {
+    "SG": {
+      "framework": "ISSB S1/S2 via SGX",
+      "mandatory_from": "FY2025 large-cap; FY2027 all listed",
+      "language": ["en"],
+      "localization": "PDPA"
+    },
+    "AU": {
+      "framework": "ASRS (AASB)",
+      "mandatory_from": "Jan 2025 Group 1 (>$500M); Jul 2026 Group 2; Jul 2027 Group 3",
+      "language": ["en"],
+      "overlay": "ASRS Scope 3 transition provisions"
+    },
+    "JP": {
+      "framework": "SSBJ (IFRS S1/S2 aligned)",
+      "mandatory_from": "FY2027 Prime Market large caps",
+      "language": ["ja"],
+      "localization": "APPI"
+    },
+    "IN": {
+      "framework": "BRSR / BRSR Core (SEBI)",
+      "mandatory_from": "Top 1000 listed; reasonable assurance top 150 expanding to 1000 by FY2027",
+      "language": ["en"],
+      "localization": "DPDP Act 2023",
+      "overlay": ["caste diversity", "MSE procurement"]
+    },
+    "KR": {
+      "framework": "KSSB",
+      "mandatory_from": "2027 large companies (>2T KRW assets)",
+      "language": ["ko", "en"]
+    }
+  },
+  "latam": {
+    "BR": {
+      "framework": "CVM Resolution 193 (ISSB S1/S2 aligned)",
+      "mandatory_from": "FY2026 reporting; due 2027",
+      "language": ["pt"]
+    },
+    "MX": {
+      "framework": "BMV voluntary TCFD/GRI",
+      "mandatory_from": "none confirmed",
+      "language": ["es", "en"]
+    }
+  },
+  "mena": {
+    "AE": {
+      "framework": "SCA ESG Disclosure Framework",
+      "mandatory_from": "FY2024 ADX/DFM listed",
+      "language": ["en", "ar"],
+      "overlay": ["UAE Net Zero 2050"]
+    },
+    "SA": {
+      "framework": "Tadawul ESG Disclosure Guidelines",
+      "mandatory_from": "2025 large-cap; 2027 all listed",
+      "language": ["ar", "en"],
+      "localization": "PDPL",
+      "overlay": ["Vision 2030 KPIs"]
+    }
+  }
+}

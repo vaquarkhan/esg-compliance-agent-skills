@@ -1,0 +1,11 @@
+name: csrd-esrs-starter
+description: CSRD ESRS disclosure starter pack
+skills:
+  - data-ingestion-validation
+  - double-materiality-assessment
+  - audit-trail-reporting
+templates:
+  - templates/csrd-scope.yaml
+mcp_servers:
+  - mcp/regulatory-db-server
+  - mcp/filing-submission-server

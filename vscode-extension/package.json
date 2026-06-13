@@ -1,0 +1,45 @@
+{
+  "name": "esg-compliance-agent-skills",
+  "displayName": "ESG Compliance Agent Skills",
+  "description": "Install ESG Agent Skills (CSRD, EU Taxonomy, SFDR, TNFD), MCP SSE server configs, starter packs, and lifecycle commands for sustainability reporting workflows.",
+  "version": "1.0.0",
+  "publisher": "vaquarkhan",
+  "license": "MIT",
+  "homepage": "https://github.com/vaquarkhan/esg-compliance-agent-skills",
+  "bugs": {
+    "url": "https://github.com/vaquarkhan/esg-compliance-agent-skills/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "keywords": [
+    "esg",
+    "csrd",
+    "esrs",
+    "sfdr",
+    "taxonomy",
+    "tnfd",
+    "ghg",
+    "compliance",
+    "agent-skills",
+    "mcp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaquarkhan/esg-compliance-agent-skills.git"
+  },
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "esgAgentSkills.installFullToolkit",
+        "title": "ESG Agent Skills: Install Full Toolkit"
+      },
+      {
+        "command": "esgAgentSkills.installMcpConfig",
+        "title": "ESG Agent Skills: Install MCP Config"
+      }
+    ]
+  }
+}

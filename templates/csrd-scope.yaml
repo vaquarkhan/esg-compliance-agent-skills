@@ -1,6 +1,3 @@
-# CSRD Scope Template
-
-```yaml
 entity: ""
 reporting_period: FY2025
 frameworks:
@@ -11,4 +8,3 @@ jurisdictions:
 material_topics: []
 exclusions: []
 human_reviewer: ""
-```

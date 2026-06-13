@@ -38,6 +38,24 @@ Execute **deterministic ESG compliance workflows** across CSRD/ESRS, EU Taxonomy
 
 Recommended flow: `/spec` → `/plan` → `/build` → `/validate` → `/review` → `/ship`
 
+## Skill routing
+
+| Signal | Primary skill |
+| --- | --- |
+| Broad / unclear task | `using-esg-agent-skills` |
+| CSRD mapping, Omnibus, ESRS ingestion | `data-ingestion-validation` |
+| GHG Scope 1/2/3, SBTi | `ghg-emissions-calculation` |
+| EU Taxonomy, NACE, DNSH | `eu-taxonomy-alignment` |
+| Double materiality, IRO | `double-materiality-assessment` |
+| SFDR, PAI, Art. 6/8/9 | `sfdr-pai-computation` |
+| iXBRL, ESEF, audit trail | `audit-trail-reporting` |
+| Deadlines, regulatory change | `regulatory-change-monitor` |
+| CSDDD, UFLPA, suppliers | `supply-chain-due-diligence` |
+| TNFD, LEAP, biodiversity | `biodiversity-tnfd-analytics` |
+| DPDP, PIPL, PDPL, cross-border | `cross-border-data-transfer` |
+
+Full catalog: [skills-index.md](skills-index.md) (10 domain + 1 meta = **100% module coverage**).
+
 ## Supervisor routing
 
 | Signal | Worker agent | Skills |
@@ -46,7 +64,7 @@ Recommended flow: `/spec` → `/plan` → `/build` → `/validate` → `/review`
 | Taxonomy, SFDR PAIs, iXBRL/ESEF | `disclosure_agent` | 03, 05, 06 |
 | GHG scopes, LCA, TNFD metrics | `calculation_agent` | 02, 09 |
 | Regulatory calendar, supply chain, data residency | `monitoring_agent` | 07, 08, 10 |
-| Ambiguous / multi-domain | `supervisor_agent` | Decompose then delegate |
+| Ambiguous / multi-domain | `supervisor_agent` | `using-esg-agent-skills` then delegate |
 
 ## MCP servers (SSE)
 
@@ -75,5 +93,5 @@ See [mcp/README.md](mcp/README.md).
 
 ```bash
 python scripts/validate-skills.py
-pytest tests/ -v
+pytest compliance_tests/ evals/ -v
 ```

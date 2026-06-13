@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: ESG Compliance Agent Skills
+version: 1.0.0
+date-released: 2026-06-13
+authors:
+  - family-names: Khan
+    given-names: Vaquar
+repository-code: https://github.com/vaquarkhan/esg-compliance-agent-skills
+license: MIT
+message: If you use this software, please cite it using these metadata.

@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "domain_skills": [
+    {"id": "01", "name": "data-ingestion-validation", "worker": "compliance_checker_agent", "mcp": ["regulatory-db-server"]},
+    {"id": "02", "name": "ghg-emissions-calculation", "worker": "calculation_agent", "mcp": ["emissions-factor-server"]},
+    {"id": "03", "name": "eu-taxonomy-alignment", "worker": "disclosure_agent", "mcp": ["taxonomy-criteria-server"]},
+    {"id": "04", "name": "double-materiality-assessment", "worker": "compliance_checker_agent", "mcp": ["regulatory-db-server"]},
+    {"id": "05", "name": "sfdr-pai-computation", "worker": "disclosure_agent", "mcp": ["regulatory-db-server", "emissions-factor-server"]},
+    {"id": "06", "name": "audit-trail-reporting", "worker": "disclosure_agent", "mcp": ["filing-submission-server"]},
+    {"id": "07", "name": "regulatory-change-monitor", "worker": "monitoring_agent", "mcp": ["regulatory-db-server"]},
+    {"id": "08", "name": "supply-chain-due-diligence", "worker": "monitoring_agent", "mcp": ["sanctions-screening-server"]},
+    {"id": "09", "name": "biodiversity-tnfd-analytics", "worker": "calculation_agent", "mcp": ["regulatory-db-server", "emissions-factor-server"]},
+    {"id": "10", "name": "cross-border-data-transfer", "worker": "monitoring_agent", "mcp": ["regulatory-db-server"]}
+  ],
+  "meta_skills": [
+    {"name": "using-esg-agent-skills", "purpose": "Routing and lifecycle entry"}
+  ]
+}

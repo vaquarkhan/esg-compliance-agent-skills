@@ -1,87 +1,115 @@
 # esg-compliance-agent-skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](requirements.txt)
+[![CI](https://github.com/vaquarkhan/esg-compliance-agent-skills/actions/workflows/validate-and-package.yml/badge.svg)](https://github.com/vaquarkhan/esg-compliance-agent-skills/actions/workflows/validate-and-package.yml)
+[![CodeQL](https://github.com/vaquarkhan/esg-compliance-agent-skills/actions/workflows/codeql.yml/badge.svg)](https://github.com/vaquarkhan/esg-compliance-agent-skills/actions/workflows/codeql.yml)
+[![Coverage](https://img.shields.io/badge/coverage-%E2%89%A580%25-brightgreen.svg)](pyproject.toml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](requirements-lock.txt)
 [![Skills](https://img.shields.io/badge/skills-10-orange.svg)](skills-index.md)
 
-**Production-grade ESG compliance agent ecosystem** — Supervisor-Worker orchestration, 10 specialized Agent Skills, five SSE MCP servers, local knowledge-base stubs, and multi-region AWS CDK infrastructure for CSRD, EU Taxonomy, SFDR, SEC climate, TNFD, and cross-border data localization.
+**Reference architecture for ESG compliance agents** — progressive-disclosure skills, PII redaction, five SSE MCP servers, deterministic routing layer, AWS CDK scaffold, and IDE plugin templates for CSRD/ESRS, EU Taxonomy, SFDR, SEC climate, TNFD, CSDDD, and cross-border localization (APAC, LATAM, MENA).
 
-> **Disclaimer:** This repository provides operational ESG reporting patterns and automation templates. It is **not legal advice** and does not replace qualified sustainability assurance, statutory audit, or legal counsel for regulatory filings.
+> **Disclaimer:** Operational ESG reporting patterns only. **Not legal advice** and does not replace sustainability assurance, statutory audit, or legal counsel.
+
+**Coverage:** 10 skills across CSRD, Taxonomy, SFDR, GHG, TNFD, supply chain, and data residency. See [docs/coverage-roadmap.md](docs/coverage-roadmap.md).
+
+Pattern aligned with [compliance-agent-skills v1.6.0](https://github.com/vaquarkhan/compliance-agent-skills/releases).
 
 ---
 
-## Architecture
+## Why this exists
 
-```mermaid
-flowchart TB
-    User[User / IDE Agent] --> Supervisor[Supervisor Agent]
-    Supervisor --> CC[Compliance Checker]
-    Supervisor --> DA[Disclosure Agent]
-    Supervisor --> CA[Calculation Agent]
-    Supervisor --> MA[Monitoring Agent]
-    CC & DA & CA & MA --> MCP[MCP SSE Servers]
-    MCP --> KB[(Knowledge Base JSON)]
-    MCP --> AWS[AWS CDK Stack]
-    AWS --> ECS[ECS Fargate]
-    AWS --> OS[OpenSearch Serverless]
-    AWS --> DDB[DynamoDB Audit]
-    AWS --> S3[S3 + Glacier Archive]
-```
+LLM agents can accelerate ESG reporting, but they must not:
 
-### Supervisor-Worker pattern
+- Invent emission factors or taxonomy eligibility
+- Submit regulatory filings without human approval
+- Process personal data without localization controls
 
-The **supervisor** routes tasks by regulatory signal (CSRD disclosure, GHG inventory, taxonomy alignment, sanctions screening) to specialized **worker agents**. Each worker loads progressive-disclosure skills from `skills/` and invokes MCP tools over SSE. Final filings and legal assessments require **human-in-the-loop** approval.
+This repository addresses that with:
 
-### Multi-region CDK deployment
-
-Infrastructure targets five AWS regions for data residency and latency:
-
-| Region | Role |
-| --- | --- |
-| `eu-west-1` | EU CSRD / ESEF primary |
-| `us-east-1` | SEC climate / SFDR US ops |
-| `ap-south-1` | India DPDP localization |
-| `ap-southeast-1` | APAC supply-chain due diligence |
-| `me-south-1` | Middle East PDPL workloads |
-
-See [infrastructure/esg_compliance_stack.py](infrastructure/esg_compliance_stack.py) for resource definitions.
+1. **10 specialized skills** with human-in-the-loop gates and MCP tool maps
+2. **PII redaction** (`redaction.py`) before model reasoning
+3. **Lifecycle commands** — `/spec`, `/plan`, `/build`, `/validate`, `/review`, `/backfill`, `/ship`
+4. **Five MCP SSE servers** for regulatory data, factors, taxonomy, filings, sanctions
+5. **IDE install surfaces** — VS Code extension and JetBrains plugin scaffold
 
 ---
 
 ## Quick start
 
-```bash
-git clone https://github.com/your-org/esg-compliance-agent-skills.git
+### Prerequisites
+
+- Python **3.11+**
+- Node.js **18+** (VS Code extension build; optional)
+- JDK **17+** (JetBrains plugin build; optional)
+
+### Bootstrap
+
+**Windows:**
+
+```powershell
+git clone git@github.com:vaquarkhan/esg-compliance-agent-skills.git
 cd esg-compliance-agent-skills
-chmod +x bootstrap.sh && ./bootstrap.sh   # Windows: .\bootstrap.ps1
+.\bootstrap.ps1
 ```
 
-### Run MCP servers locally (SSE)
-
-Each server exposes tools on a dedicated port:
-
-| Server | Port | Module |
-| --- | --- | --- |
-| regulatory-db-server | 8001 | `python mcp/regulatory-db-server/server.py` |
-| emissions-factor-server | 8002 | `python mcp/emissions-factor-server/server.py` |
-| taxonomy-criteria-server | 8003 | `python mcp/taxonomy-criteria-server/server.py` |
-| filing-submission-server | 8004 | `python mcp/filing-submission-server/server.py` |
-| sanctions-screening-server | 8005 | `python mcp/sanctions-screening-server/server.py` |
-
-### Orchestration
+**macOS / Linux:**
 
 ```bash
-export MCP_REGULATORY_URL=http://127.0.0.1:8001/sse
-python -m orchestration.supervisor_agent "Map CSRD ESRS E1 data points for FY2025"
+git clone git@github.com:vaquarkhan/esg-compliance-agent-skills.git
+cd esg-compliance-agent-skills
+chmod +x bootstrap.sh && ./bootstrap.sh
 ```
 
-### Deploy infrastructure
+### Run the agent locally
 
 ```bash
-cd infrastructure
-pip install -r requirements.txt
-cdk bootstrap
-cdk deploy --all
+pip install -r requirements-lock.txt
+export OPENAI_API_KEY=sk-...   # or ANTHROPIC_API_KEY
+python agent.py "Scope CSRD ESRS E1 data points for FY2025"
+```
+
+Without API keys, the agent uses Pydantic AI `TestModel`.
+
+```bash
+python scripts/demo_agent.py
+# or: make demo
+```
+
+### Validate
+
+```bash
+make validate
+make test
+make lint
+make security
+```
+
+**Engineering:** CI enforces Ruff, mypy, pip-audit, Bandit, detect-secrets, CodeQL, and ≥80% coverage on `agent.py` + `redaction.py`. See [docs/architecture.md](docs/architecture.md), [docs/sme-review.md](docs/sme-review.md), [docs/redaction-limitations.md](docs/redaction-limitations.md).
+
+**Locked dependencies:** `requirements-lock.txt` (compile with `make lock` from `requirements.in`).
+
+---
+
+## Plugin installation
+
+### Cursor
+
+See [docs/cursor-setup.md](docs/cursor-setup.md). Installs `.cursor/rules/`, skills, and `mcp/esg-mcp-servers.mcp.json`.
+
+### VS Code
+
+```bash
+cd vscode-extension && npm install -g @vscode/vsce && vsce package --no-dependencies
+code --install-extension esg-compliance-agent-skills-*.vsix
+```
+
+See [docs/plugin-publishing.md](docs/plugin-publishing.md).
+
+### JetBrains
+
+```bash
+cd jetbrains-plugin && ./gradlew buildPlugin
 ```
 
 ---
@@ -90,15 +118,15 @@ cdk deploy --all
 
 | Command | Purpose |
 | --- | --- |
-| `/spec` | Define scope, frameworks, jurisdictions, material topics |
-| `/plan` | Produce work breakdown, MCP tool plan, evidence checklist |
-| `/build` | Execute skills + MCP tools to produce draft artifacts |
-| `/validate` | Schema, XBRL, factor-source, and cross-border checks |
-| `/review` | SME / legal review gate (human required) |
-| `/backfill` | Historical restatements and audit trail reconciliation |
-| `/ship` | Package filings for human-approved submission only |
+| `/spec` | Scope frameworks, entities, jurisdictions |
+| `/plan` | WBS, MCP tool plan, evidence checklist |
+| `/build` | Execute skills + MCP (draft artifacts) |
+| `/validate` | Schema, XBRL, factor-source checks |
+| `/review` | SME / legal sign-off (human required) |
+| `/backfill` | Historical restatements |
+| `/ship` | Human-approved filing package only |
 
-Full routing: [AGENTS.md](AGENTS.md).
+Example: `/spec` → `/build` (ghg-emissions-calculation) → `/validate` → `/review` → `/ship`
 
 ---
 
@@ -106,18 +134,18 @@ Full routing: [AGENTS.md](AGENTS.md).
 
 | # | Skill | Focus |
 | --- | --- | --- |
-| 01 | `data-ingestion-validation` | CSRD 1,100+ Omnibus data mapping |
-| 02 | `ghg-emissions-calculation` | Scopes 1–3, LCA, SBTi |
+| 01 | `data-ingestion-validation` | CSRD Omnibus mapping |
+| 02 | `ghg-emissions-calculation` | Scopes 1–3, SBTi |
 | 03 | `eu-taxonomy-alignment` | NACE, TSC, DNSH |
-| 04 | `double-materiality-assessment` | Impact / financial scoring |
-| 05 | `sfdr-pai-computation` | 18 PAIs, Art. 6/8/9 |
-| 06 | `audit-trail-reporting` | iXBRL/ESEF, DynamoDB/S3/Glacier |
-| 07 | `regulatory-change-monitor` | Global deadline calendar |
+| 04 | `double-materiality-assessment` | Impact / financial |
+| 05 | `sfdr-pai-computation` | 18 PAIs |
+| 06 | `audit-trail-reporting` | iXBRL/ESEF |
+| 07 | `regulatory-change-monitor` | Deadline calendar |
 | 08 | `supply-chain-due-diligence` | CSDDD, UFLPA |
-| 09 | `biodiversity-tnfd-analytics` | TNFD LEAP, MSA, BII |
-| 10 | `cross-border-data-transfer` | DPDP, PIPL, PDPL localization |
+| 09 | `biodiversity-tnfd-analytics` | TNFD LEAP |
+| 10 | `cross-border-data-transfer` | DPDP, PIPL, PDPL |
 
-See [skills-index.md](skills-index.md).
+Full catalog: [skills-index.md](skills-index.md). Routing: [AGENTS.md](AGENTS.md).
 
 ---
 
@@ -125,22 +153,57 @@ See [skills-index.md](skills-index.md).
 
 ```
 esg-compliance-agent-skills/
-├── AGENTS.md                 # Supervisor routing + lifecycle commands
-├── skills/                   # 10 Agent Skills (SKILL.md each)
-├── knowledge_base/           # Local JSON stubs pre-OpenSearch
-├── mcp/                      # 5 SSE MCP servers + Dockerfiles
-├── orchestration/            # Supervisor + worker agents
-├── infrastructure/           # AWS CDK app + stack
-├── docs/                     # Architecture and setup guides
-├── tests/                    # Unit tests
-├── scripts/                  # Validation utilities
-└── .github/                  # CI workflows
+├── agent.py                 # Pydantic AI entry + SkillsCapability
+├── redaction.py             # PII redaction gate
+├── skills/                  # 10 Agent Skills
+├── mcp/                     # 5 SSE MCP servers
+├── orchestration/           # Supervisor + worker agents
+├── infrastructure/          # AWS CDK stack
+├── knowledge_base/          # JSON stubs pre-OpenSearch
+├── presets/                 # CSRD, SFDR presets
+├── starter-packs/           # Curated bundles
+├── templates/               # YAML scaffolds
+├── references/              # SME-reviewed checklists
+├── registry/assets.json     # Machine-readable index
+├── docs/                    # Architecture, SME review, plugins
+├── .cursor/rules/           # Cursor agent rules
+├── .claude/commands/        # Lifecycle slash commands
+├── agents/                  # Persona prompts
+├── examples/                # Runnable validators
+├── vscode-extension/
+└── jetbrains-plugin/
 ```
+
+---
+
+## MCP servers (SSE)
+
+| Server | Port | Run |
+| --- | --- | --- |
+| regulatory-db-server | 8001 | `python mcp/regulatory-db-server/server.py` |
+| emissions-factor-server | 8002 | `python mcp/emissions-factor-server/server.py` |
+| taxonomy-criteria-server | 8003 | `python mcp/taxonomy-criteria-server/server.py` |
+| filing-submission-server | 8004 | `python mcp/filing-submission-server/server.py` |
+| sanctions-screening-server | 8005 | `python mcp/sanctions-screening-server/server.py` |
+
+See [mcp/README.md](mcp/README.md).
+
+---
+
+## Documentation
+
+| Doc | Topic |
+| --- | --- |
+| [docs/global-regulatory-landscape.md](docs/global-regulatory-landscape.md) | APAC, LATAM, MENA deadlines & localization |
+| [docs/coverage-roadmap.md](docs/coverage-roadmap.md) | Framework coverage |
+| [docs/getting-started.md](docs/getting-started.md) | First engagement |
+| [docs/skill-anatomy.md](docs/skill-anatomy.md) | Authoring skills |
+| [docs/plugin-publishing.md](docs/plugin-publishing.md) | VS Code / JetBrains releases |
+| [AGENTS.md](AGENTS.md) | Agent routing |
+| [CLAUDE.md](CLAUDE.md) | Claude entry |
 
 ---
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-Inspired by the engineering patterns in [compliance-agent-skills](https://github.com/vaquarkhan/compliance-agent-skills/releases).

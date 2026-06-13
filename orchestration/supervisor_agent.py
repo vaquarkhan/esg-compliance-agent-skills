@@ -1,4 +1,8 @@
-"""Supervisor agent — routes ESG tasks to specialized workers."""
+"""Supervisor agent — deterministic routing layer for ESG tasks.
+
+Routes by regex to worker agents that call MCP tools. For LLM-driven
+decomposition and skill loading, use agent.py (Pydantic AI + SkillsCapability).
+"""
 
 from __future__ import annotations
 

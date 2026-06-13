@@ -1,39 +1,76 @@
 ---
 name: sfdr-pai-computation
-description: Computes SFDR mandatory PAIs and product classification Articles 6/8/9. Use for SFDR disclosures or PAI statements.
+description: Computes SFDR mandatory and optional PAIs, Article 6/8/9 product classification, and taxonomy alignment percentages for financial products. Use for PAI statements, RTS Annex I, or fund classification.
 ---
 
 # Skill 05: SFDR PAI Computation
 
-## Scope
+## Overview
 
-Calculate 18 mandatory principal adverse impact indicators.
+Calculates **18 mandatory Principal Adverse Impact indicators** (and optional) per SFDR RTS Annex I, with product-level **Article 6 / 8 / 9** classification workflow.
+
+## When to Use
+
+- Entity-level or product-level PAI statement
+- Fund classification review (light green vs dark green)
+- Taxonomy alignment % at product level (with Skill 03)
 
 ## Mandatory constraints
 
-- **Human-in-the-loop:** All final filings, legal assessments, and assurance conclusions require explicit human reviewer sign-off.
-- **No guessing:** Do not invent emission factors, taxonomy percentages, materiality scores, or regulatory citations.
-- **Provenance:** Every numeric output must cite source (MCP tool response, knowledge base version, or primary document).
-- **PII:** Redact personal identifiers; enforce localization via `cross-border-data-transfer` when data leaves origin jurisdiction.
+- **Human-in-the-loop:** Legal/compliance confirms Art. 6/8/9 classification before marketing.
+- **No guessing:** PAI numerators/denominators need investee data or documented estimates methodology.
+- **Provenance:** Cite RTS indicator ID, data source, estimation method per indicator.
 
-## Workflow
+## Core process
 
-1. Confirm product classification (Art. 6/8/9) with legal review
-2. Gather investee data
-3. Compute PAIs with documented formulas
-4. Reconcile to RTS Annex I tables
+### Step 1 — Product classification
+
+Confirm with legal: Art. 6 (no sustainability focus), Art. 8 (promotes E/S characteristics), Art. 9 (sustainable objective). Document in `product_classification_memo.md`.
+
+### Step 2 — PAI data collection
+
+Gather investee-level data for mandatory indicators (GHG emissions, fossil exposure, biodiversity, social, governance, etc.). Use `get_emission_factor` where activity data exists.
+
+### Step 3 — Calculate 18 mandatory PAIs
+
+For each indicator record: formula, numerator, denominator, unit, coverage % of AUM.
+
+Reference RTS Annex I table — do not paraphrase indicator definitions.
+
+### Step 4 — Optional indicators & taxonomy %
+
+Include optional PAIs if advertised. Product taxonomy alignment % requires Skill 03 outputs.
+
+### Step 5 — Emit `pai_statement.json`
+
+Mark `human_review_required: true`, `assurance_status: pending`.
 
 ## MCP tools
 
-`regulatory-db-server`: get_framework_requirements; `emissions-factor-server`: get_emission_factor
+`regulatory-db-server`: `get_framework_requirements("SFDR")`  
+`emissions-factor-server`: `get_emission_factor` (PAI 1–3 GHG-related)
 
-## Output artifacts
+## Common rationalizations
 
-- `pai_statement.json`
-- `product_classification_memo.md`
+| Excuse | Rebuttal |
+| --- | --- |
+| "Estimate all PAIs with sector averages." | RTS expects **best available data** — document why investee data unavailable. |
+| "Article 8 and 9 are marketing labels." | Misclassification is **regulatory risk** — legal sign-off required. |
 
-## Anti-patterns
+## Red flags
 
-- Submitting filings without `/review` approval
-- Using outdated emission factors without `list_factor_sources` verification
-- Declaring taxonomy alignment without DNSH assessment
+- PAI statement without coverage ratio disclosure
+- GHG PAIs inconsistent with Skill 02 inventory without reconciliation note
+
+## Verification checklist
+
+- [ ] All 18 mandatory PAIs addressed or explicitly N/A with reason
+- [ ] Product classification memo signed
+- [ ] RTS indicator IDs cited
+- [ ] `/review` before publication
+
+## SME provenance
+
+| **Source** | SFDR RTS Annex I |
+| **Last reviewed** | 2026-06-13 |
+| **Next review due** | 2026-09-13 |

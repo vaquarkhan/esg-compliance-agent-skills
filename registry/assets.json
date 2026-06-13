@@ -1,6 +1,7 @@
 {
   "version": "1.0.0",
   "skills": [
+    "skills/using-esg-agent-skills",
     "skills/data-ingestion-validation",
     "skills/ghg-emissions-calculation",
     "skills/eu-taxonomy-alignment",
@@ -21,7 +22,40 @@
   ],
   "knowledge_base": [
     "knowledge_base/emission_factors.json",
-    "knowledge_base/taxonomy_criteria.json"
+    "knowledge_base/taxonomy_criteria.json",
+    "knowledge_base/jurisdiction_reporting.json"
+  ],
+  "templates": [
+    {"path": "templates/csrd-scope.yaml", "framework": "CSRD"}
+  ],
+  "starter_packs": [
+    {"path": "starter-packs/csrd-esrs-starter.yaml", "name": "csrd-esrs-starter"}
+  ],
+  "examples": [
+    {"path": "examples/csrd-e1-mapping", "name": "csrd-e1-mapping"},
+    {"path": "examples/ghg-inventory", "name": "ghg-inventory"}
+  ],
+  "presets": [
+    "presets/csrd-esrs/PRESET.md",
+    "presets/sfdr-taxonomy/PRESET.md"
+  ],
+  "references": [
+    "references/csrd-esrs-checklist.md",
+    "references/ghg-protocol-checklist.md"
+  ],
+  "agents": [
+    "agents/esg-architect.md",
+    "agents/csrd-disclosure-officer.md"
+  ],
+  "plugin_packages": [
+    {"path": "vscode-extension", "type": "vscode"},
+    {"path": "jetbrains-plugin", "type": "jetbrains"}
+  ],
+  "core_scripts": [
+    "agent.py",
+    "redaction.py",
+    "scripts/demo_agent.py",
+    "scripts/validate-skills.py"
   ],
   "infrastructure": "infrastructure/esg_compliance_stack.py"
 }

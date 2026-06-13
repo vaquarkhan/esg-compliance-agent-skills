@@ -1,0 +1,39 @@
+{
+  "framework": "CSRD",
+  "topic": "ESRS E1",
+  "data_points": [
+    {
+      "id": "E1-1",
+      "name": "Transition plan for climate change mitigation",
+      "datatype": "narrative"
+    },
+    {
+      "id": "E1-6",
+      "name": "Gross Scope 1 GHG emissions",
+      "datatype": "monetary/energy",
+      "unit": "tCO2e"
+    },
+    {
+      "id": "E1-7",
+      "name": "Gross Scope 2 GHG emissions",
+      "datatype": "monetary/energy",
+      "unit": "tCO2e"
+    },
+    {
+      "id": "E1-8",
+      "name": "Gross Scope 3 GHG emissions",
+      "datatype": "monetary/energy",
+      "unit": "tCO2e"
+    },
+    {
+      "id": "E1-9",
+      "name": "GHG emissions intensity",
+      "datatype": "ratio",
+      "unit": "tCO2e per revenue"
+    }
+  ],
+  "mappings": [],
+  "human_review_required": true,
+  "note": "Populate mappings from source systems \u2014 stub output",
+  "source": "ESRS E1 sample subset \u2014 verify against official ESRS Set 1 text before filing"
+}

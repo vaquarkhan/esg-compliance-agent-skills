@@ -1,0 +1,4 @@
+scope,factor_source,factor_activity,activity,unit,country_code,notes
+scope_1,EPA,natural_gas_combustion_stationary,12500,MMBtu,,HQ boiler
+scope_2_location,DEFRA,grid_electricity,4200000,kWh,IN,India operations
+scope_3,DEFRA,business_travel_air_domestic,85000,passenger-km,,Domestic flights

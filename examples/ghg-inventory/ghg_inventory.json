@@ -1,0 +1,14 @@
+{
+  "reporting_period": "FY2025",
+  "boundary": "operational_control",
+  "scopes": {
+    "scope_1_tCO2e": 663.25,
+    "scope_2_location_tCO2e": 2973.6,
+    "scope_3_tCO2e": 21.675,
+    "total_tCO2e": 3658.525
+  },
+  "gwp_standard": "IPCC AR6 GWP100",
+  "activity_file_sha256": "b0f4b948886c51be837378d84db286ca74c6ec7efefe2a7d7fa73dd984601592",
+  "human_review_required": true,
+  "assurance_status": "pending_sustainability_assurance_sign_off"
+}
